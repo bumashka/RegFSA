@@ -7,13 +7,13 @@ from State import State
 class FSA:
     def __init__(self, state_transitions=None):
         self.states = []
-        self.alphabet = list(string.ascii_letters + string.digits + string.punctuation)
-        self.fin_states = [9, 11, 12, 13]
+        self.alphabet = list("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ ")
+        self.fin_states = [8, 11, 13, 14, 15]
         for i in range(len(state_transitions)):
             self.states.append(State(i, state_transitions[i]))
 
     def get_random_transition(self, transition):
-        if transition in ["http", "s", ":"]:
+        if transition in ["http", "s", ":","-"]:
             return transition
         elif transition in ["\/", "\."]:
             return transition[1:]
@@ -29,7 +29,7 @@ class FSA:
         if len(url) < 4:
             print("There is nothing to check!")
             return
-        elif len(url) > 100:
+        elif len(url) > 1000:
             print("The url address is way too long!")
             return
         else:
