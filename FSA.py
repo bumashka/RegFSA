@@ -7,13 +7,14 @@ from State import State
 class FSA:
     def __init__(self, state_transitions=None):
         self.states = []
-        self.alphabet = list("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ ")
-        self.fin_states = [8, 11, 13, 14, 15]
+        self.alphabet = list(
+            "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ ")
+        self.fin_states = [9, 11, 13, 14, 15]
         for i in range(len(state_transitions)):
             self.states.append(State(i, state_transitions[i]))
 
     def get_random_transition(self, transition):
-        if transition in ["http", "s", ":","-"]:
+        if transition in ["http", "s", ":", "-"]:
             return transition
         elif transition in ["\/", "\."]:
             return transition[1:]
@@ -61,3 +62,13 @@ class FSA:
                 finish = random.choice(list({True, False}))
         print("Current state is " + str(current_state) + ";\nCurrent generated_string is " +
               generated_string + ";\nIs it finish? " + str(not finish))
+
+    def check_from_file(self, path):
+        file = open(path)
+        file_lines = file.readlines()
+        file.close()
+        for line in file_lines:
+            line = line[:-1]
+            print(line)
+            self.check(line)
+            print("---")
